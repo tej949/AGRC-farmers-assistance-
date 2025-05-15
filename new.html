@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGRC - Farmer's Assistance</title>
+    <style>
+        /* Basic Reset & General Styles (KEEP YOUR EXISTING STYLES HERE) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; } /* For smooth scrolling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            overflow: hidden;
+            padding: 0 15px;
+        }
+        h1, h2, h3 { color: #2c522d; /* Dark green */ }
+        a { text-decoration: none; color: #509e52; /* Lighter green for links */ }
+        .btn {
+            display: inline-block;
+            background: #3a3a3a; /* Dark gray/black like in image */
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover { background: #509e52; /* Green on hover */ }
+        .section { padding: 40px 0; border-bottom: 1px solid #e0e0e0; }
+        .section:last-child { border-bottom: none; }
+        .section-title { text-align: center; font-size: 2em; margin-bottom: 30px; }
+        .content-box { background: #fff; padding: 20px; margin-bottom:20px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+
+        /* Header & Navigation (mimicking the image) */
+        .main-header {
+            background: #fff;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-size: 2em; font-weight: bold; color: #509e52; }
+        .logo-company-name { color: #333; } /* For "GRC" part */
+        .header-contact-info { font-size: 0.8em; color: #666; text-align: right; }
+        .main-nav ul { list-style: none; display: flex; }
+        .main-nav ul li { margin-left: 20px; }
+        .main-nav ul li a {
+            color: #333;
+            padding: 8px 15px;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 0.9em;
+            border-radius: 3px;
+            transition: background-color 0.3s ease, color 0.3s ease; /* Added transition */
+        }
+        .main-nav ul li a:hover, .main-nav ul li a.active-nav { /* Modified active style */
+            background-color: #3a3a3a; /* Dark background for active/hover nav item */
+            color: #fff;
+        }
+
+        /* Hero Section (KEEP YOUR EXISTING STYLES) */
+        .hero {
+            background: url('https://images.pexels.com/photos/158634/field-wheat-grain-agriculture-158634.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center/cover;
+            color: #fff;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .hero h1 { font-size: 3em; margin-bottom: 10px; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); }
+        .hero p { font-size: 1.2em; max-width: 600px; margin-bottom: 20px; text-shadow: 1px 1px 2px rgba(0,0,0,0.7); }
+
+        /* Features Grid (KEEP YOUR EXISTING STYLES) */
+         .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: -80px;
+            position: relative;
+            z-index: 2;
+        }
+        .feature-card {
+            background: #fff;
+            padding: 25px;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            text-align: left;
+        }
+        .feature-card .card-number {
+            display: inline-block;
+            background-color: #e6f4e7;
+            color: #509e52;
+            padding: 5px 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .feature-card h3 { font-size: 1.4em; margin-bottom: 10px; }
+        .feature-card p { font-size: 0.95em; margin-bottom: 15px; line-height: 1.5; }
+
+
+        /* Language Switcher (KEEP YOUR EXISTING STYLES) */
+        .language-switcher { text-align: center; padding: 15px 0; background-color: #f0f0f0; border-bottom: 1px solid #ddd;}
+        .language-switcher button {
+            padding: 8px 12px; margin: 0 5px; cursor: pointer;
+            border: 1px solid #ccc; background-color: #fff; border-radius: 3px;
+        }
+        .language-switcher button.active-lang { background-color: #509e52; color: white; border-color: #509e52; }
+
+        /* Weather Section (KEEP YOUR EXISTING STYLES) */
+        #weather-section input[type="text"] { padding: 10px; border: 1px solid #ccc; border-radius: 3px; margin-right: 10px; width: 200px; }
+        #weather-section button { margin-top: 10px; /* For small screens */ }
+        #weather-results { margin-top: 15px; padding: 15px; background: #e9f5e9; border-left: 4px solid #509e52; }
+        #weather-results p { margin-bottom: 5px; }
+        #weather-results img { vertical-align: middle; margin-right: 5px; }
+        .error-msg { color: red; font-weight: bold; margin-top: 10px; }
+
+        /* Footer (KEEP YOUR EXISTING STYLES) */
+        .main-footer { background: #333; color: #fff; text-align: center; padding: 25px 0; margin-top: 30px; }
+        .main-footer p { margin: 0; font-size: 0.9em; }
+
+        /* Responsive (KEEP YOUR EXISTING STYLES) */
+        @media (max-width: 900px) {
+            .main-header .container { flex-direction: column; }
+            .main-nav { margin-top: 10px; }
+            .main-nav ul { justify-content: center; flex-wrap: wrap; }
+            .main-nav ul li { margin: 5px; }
+            .hero h1 { font-size: 2.2em; }
+            .header-contact-info { text-align: center; margin-top: 5px;}
+        }
+        @media (max-width: 600px) {
+            .features-grid { grid-template-columns: 1fr; margin-top: 20px; }
+            #weather-section input[type="text"], #weather-section button { width: 100%; margin-bottom: 10px; margin-right: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">A<span class="logo-company-name">GRC</span></div>
+            <div class="header-contact-info" data-translate="header_phone">ANY QUESTIONS? CALL US +1 800 559 6580</div>
+            <nav class="main-nav">
+                <ul>
+                    <!-- MODIFIED/NEW Nav Links -->
+                    <li><a href="#section-about" class="nav-link active-nav" data-translate="nav_about_us">About Us</a></li>
+                    <li><a href="https://krishi.icar.gov.in/jspui/" target="_blank" class="nav-link" data-translate="nav_solutions">Solutions</a></li>
+                    <li><a href="https://agricoop.gov.in/en/Major#gsc.tab=0" target="_blank" class="nav-link" data-translate="nav_services">Services</a></li>
+                    <li><a href="https://www.agritechtomorrow.com/" target="_blank" class="nav-link" data-translate="nav_technologies">Technologies</a></li>
+                    <li><a href="https://krishijagran.com/blog" target="_blank" class="nav-link" data-translate="nav_blog">Blog</a></li>
+                    <li><a href="#section-contact" class="nav-link" data-translate="nav_contacts">Contacts</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <!-- YOUR EXISTING HERO CONTENT -->
+        <div class="hero-content">
+            <h1 data-translate="hero_title">BE THE LEADER</h1>
+            <p data-translate="hero_subtitle">IN THE INDUSTRY!</p>
+            <p data-translate="hero_text_desc">Connecting farmers with resources and solutions for sustainable and profitable agriculture.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="features-grid">
+           <!-- YOUR EXISTING FEATURE CARDS -->
+             <div class="feature-card">
+                <span class="card-number">01</span>
+                <h3 data-translate="card1_title">PREMIUM VEGETABLES</h3>
+                <p data-translate="card1_desc">Information on high-yield vegetable varieties, optimal growing conditions, and market linkage support.</p>
+                <a href="#section-marketing-storage" class="btn btn-more" data-translate="btn_learn_more">Learn More</a>
+            </div>
+            <div class="feature-card">
+                <span class="card-number">02</span>
+                <h3 data-translate="card2_title">ECO SOLUTIONS</h3>
+                <p data-translate="card2_desc">Promoting organic farming, integrated pest management (IPM), and water conservation techniques for sustainable agriculture.</p>
+                <a href="#section-pest-control" class="btn btn-more" data-translate="btn_learn_more">Learn More</a>
+            </div>
+            <div class="feature-card">
+                <span class="card-number">03</span>
+                <h3 data-translate="card3_title">FROST PROTECTION</h3>
+                <p data-translate="card3_desc">Guidance on protecting vulnerable crops from frost using timely weather alerts and effective mitigation strategies.</p>
+                <a href="#weather-section" class="btn btn-more" data-translate="btn_learn_more">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="language-switcher">
+        <!-- YOUR EXISTING LANGUAGE SWITCHER BUTTONS -->
+        <button onclick="switchLanguage('en')" class="active-lang">English</button>
+        <button onclick="switchLanguage('hi')">हिन्दी</button>
+        <button onclick="switchLanguage('kn')">ಕನ್ನಡ</button>
+        <button onclick="switchLanguage('te')">తెలుగు</button>
+        <button onclick="switchLanguage('ta')">தமிழ்</button>
+    </div>
+
+    <!-- NEW About Us Section -->
+    <section id="section-about" class="section">
+        <div class="container">
+            <h2 class="section-title" data-translate="title_about_us">About AGRC</h2>
+            <div class="content-box">
+                <p data-translate="about_para1">AGRC is dedicated to empowering farmers by providing accessible information and connecting them with essential resources. Our mission is to foster sustainable agricultural practices and improve the livelihoods of farming communities across India.</p>
+                <p data-translate="about_para2">We believe that by bridging the gap between traditional farming wisdom and modern agricultural advancements, we can help farmers overcome challenges related to climate change, market access, and resource management. This platform aims to be a comprehensive guide for farmers seeking solutions for crop management, weather information, government schemes, and much more.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="container"> <!-- This container wraps all subsequent sections -->
+        <!-- Section 1: Farmer Distress & Suicide Prevention (Information Focus) -->
+        <section id="section-farmer-distress" class="section">
+             <!-- YOUR EXISTING FARMER DISTRESS CONTENT -->
+            <h2 class="section-title" data-translate="title_farmer_distress">Farmer Well-being & Support</h2>
+            <div class="content-box">
+                <h3 data-translate="subtitle_distress_factors">Addressing Key Stressors:</h3>
+                <p data-translate="text_distress_intro">Financial pressure from rising input costs (seeds, chemicals, equipment), labor expenses, and debt can be overwhelming. Limited market access, lack of policy awareness, and climate change impacts (water crises, crop failure) further contribute to this strain.</p>
+                <h4 data-translate="subtitle_support_available">Available Support & Information:</h4>
+                <ul>
+                    <li data-translate="distress_li_schemes"><strong>Government Schemes & Policies:</strong> Learn about beneficial schemes related to subsidies, insurance, and support. (We will aim to list some static links or information here).</li>
+                    <li data-translate="distress_li_market_access"><strong>Market Access:</strong> Information on local mandis, eNAM portal, and fair pricing.</li>
+                    <li data-translate="distress_li_financial_lit"><strong>Financial Literacy:</strong> Resources on managing finances and understanding loan terms.</li>
+                    <li data-translate="distress_li_helplines"><strong>Mental Health Helplines:</strong> (Example) KIRAN: 1800-599-0019. <em data-translate="distress_em_local_helplines">Please verify and add local/state-specific helplines.</em></li>
+                    <li data-translate="distress_li_climate_resilience"><strong>Climate Resilience:</strong> Tips on water conservation and drought-resistant crop varieties.</li>
+                </ul>
+                <p><em><strong data-translate="distress_important_note">Important Note:</strong> <span data-translate="distress_note_text">This platform provides information. If you or someone you know is in distress, please contact mental health professionals or a trusted individual immediately.</span></em></p>
+            </div>
+        </section>
+
+        <!-- Section 2 & 5: Insects & Correct Medicine Usage -->
+        <section id="section-pest-control" class="section">
+            <!-- YOUR EXISTING PEST CONTROL CONTENT -->
+            <h2 class="section-title" data-translate="title_pest_management">Pest Management & Safe Chemical Use</h2>
+            <div class="content-box">
+                <h3 data-translate="subtitle_problem_desc_pests">Problem: Crop damage due to insects, limited funds for chemicals, or uncertainty about which chemical to use and in what quantity.</h3>
+                <h4 data-translate="subtitle_solution_approach_pests">Our Approach:</h4>
+                <ul>
+                    <li data-translate="pests_li_identification"><strong>Pest Identification (Example):</strong> For 'Rice' crop, a common pest is 'Stem Borer'. Symptoms include 'dead heart' or 'white earhead'.</li>
+                    <li data-translate="pests_li_control_options"><strong>Control Options:</strong>
+                        <ul data-translate="pests_ul_options">
+                            <li><strong data-translate="pests_strong_organic">Organic:</strong> Pheromone traps, encouraging natural predators.</li>
+                            <li><strong data-translate="pests_strong_chemical">Chemical (if necessary):</strong> Example: For Stem Borer, 'Cartap Hydrochloride 4G'.</li>
+                        </ul>
+                    </li>
+                    <li data-translate="pests_li_correct_usage"><strong>Correct Dosage & Safety:</strong> <strong data-translate="pests_strong_example_dosage">Example:</strong> 'Cartap Hydrochloride 4G' - 7.5 kg per acre. <strong data-translate="pests_strong_warning">ALWAYS follow product label instructions precisely.</strong> Use protective gear (gloves, mask). Understand the Pre-Harvest Interval (PHI).</li>
+                    <li data-translate="pests_li_low_cost"><strong>Low-Cost Solutions:</strong> Prioritize Integrated Pest Management (IPM) and locally available, affordable solutions.</li>
+                </ul>
+                <p><em data-translate="pests_em_disclaimer">Disclaimer: This is illustrative. Consult a local agricultural expert for specific advice for your crop and region.</em></p>
+            </div>
+        </section>
+
+        <!-- Section 3: Weather Forecast (Includes Rain Prediction) -->
+        <section id="weather-section" class="section">
+            <!-- YOUR EXISTING WEATHER CONTENT -->
+            <h2 class="section-title" data-translate="title_weather_forecast">Weather Forecast & Rain Prediction</h2>
+            <div class="content-box">
+                <p data-translate="text_weather_intro">Get weather updates to plan your farming activities. This can help understand potential crop damage due to adverse weather and predict rainfall for various crop stages (initial, mid-growth, harvest).</p>
+                <input type="text" id="city-input" placeholder="Enter city name">
+                <button class="btn" onclick="getWeather()" data-translate="btn_get_weather">Get Weather</button>
+                <button class="btn" onclick="getWeatherByLocation()" data-translate="btn_use_location">Use My Location</button>
+                <div id="weather-results" style="display:none;">
+                    <h3 id="weather-city-name"></h3>
+                    <p><img id="weather-icon" src="" alt="Weather Icon"><span id="weather-description"></span></p>
+                    <p><strong data-translate="label_temperature">Temperature:</strong> <span id="weather-temp"></span></p>
+                    <p><strong data-translate="label_humidity">Humidity:</strong> <span id="weather-humidity"></span></p>
+                    <p><strong data-translate="label_wind">Wind:</strong> <span id="weather-wind"></span></p>
+                    <p><strong data-translate="label_rain_chance">Rain Chance (Next Few Days):</strong> <span id="weather-rain-prediction"></span> (Requires more detailed forecast data)</p>
+                    <div id="daily-forecast-container"></div>
+                </div>
+                <p id="weather-error" class="error-msg"></p>
+            </div>
+        </section>
+
+        <!-- Section 4: Low Current Supply, Motor/Borewell Issues -->
+        <section id="section-equipment-issues" class="section">
+             <!-- YOUR EXISTING EQUIPMENT ISSUES CONTENT -->
+            <h2 class="section-title" data-translate="title_equipment_help">Equipment & Irrigation Issues</h2>
+            <div class="content-box">
+                <h3 data-translate="subtitle_common_problems">Common Problems: Low current supply, motor failures, borewell issues are costly for farmers.</h3>
+                <h4 data-translate="subtitle_possible_solutions_equipment">Information & Possible Solutions:</h4>
+                <ul>
+                    <li data-translate="equip_li_low_voltage"><strong>Low Voltage/Current:</strong> Check for loose connections at meter/starter. Ensure balanced 3-phase supply. Report to electricity board if persistent. Consider voltage stabilizers for sensitive equipment.</li>
+                    <li data-translate="equip_li_motor_issues"><strong>Motor Issues:</strong> (Not starting, tripping, overheating) Check fuses/MCB, capacitor, overload relay settings. Ensure proper earthing. Preventative maintenance is key.</li>
+                    <li data-translate="equip_li_borewell_problems"><strong>Borewell Issues:</strong> (Low yield, pump not working) Could be due to falling water table, siltation, pump wear & tear. Consult professionals for diagnosis. Explore rainwater harvesting for recharge.</li>
+                    <li data-translate="equip_li_finding_help"><strong>Finding Help:</strong> (This section would ideally link to a curated list of local technicians if such a database could be maintained, which is hard in a single file). <span data-translate="equip_span_connect_local">Connect with local agricultural offices for trusted mechanic recommendations.</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Marketing & Storage (Combined for brevity) -->
+        <section id="section-marketing-storage" class="section">
+            <!-- YOUR EXISTING MARKETING & STORAGE CONTENT -->
+             <h2 class="section-title" data-translate="title_marketing_storage">Marketing, Storage & Price Info</h2>
+            <div class="content-box">
+                <h3 data-translate="subtitle_market_challenge">Challenge: Farmers need to sell products at profitable rates and find storage.</h3>
+                <h4 data-translate="subtitle_marketing_support">Support & Information:</h4>
+                <ul>
+                    <li data-translate="market_li_price_discovery"><strong>Price Discovery:</strong> We aim to show current vegetable rates in different locations (This is very hard to do real-time in a single HTML file without a backend and reliable API. For now, static links):
+                        <ul data-translate="market_ul_price_links">
+                            <li><a href="http://agmarknet.gov.in/" target="_blank" data-translate="link_agmarknet">AGMARKNET</a> for Indian market prices.</li>
+                            <li>(Add links to state-specific agriculture marketing boards).</li>
+                        </ul>
+                    </li>
+                    <li data-translate="market_li_selling_platforms"><strong>Selling Platforms:</strong>
+                        <ul data-translate="market_ul_platforms">
+                            <li><a href="https://www.enam.gov.in/web/" target="_blank" data-translate="link_enam">eNAM (National Agriculture Market)</a>.</li>
+                            <li>(Information on local co-operatives or farmer producer organizations - FPOs).</li>
+                        </ul>
+                    </li>
+                    <li data-translate_li_storage"><strong>Storage (Godowns):</strong>
+                        <ul data-translate="market_ul_godowns">
+                            <li>Information on Warehousing Development and Regulatory Authority (WDRA) approved warehouses.</li>
+                            <li>(Tips for on-farm storage for certain commodities).</li>
+                        </ul>
+                         <span data-translate="market_span_godown_locator">(A godown locator requires a database and ideally mapping - complex for a single file).</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- UAS Bangalore Implements -->
+        <section id="section-uas-implements" class="section">
+            <!-- YOUR EXISTING UAS IMPLEMENTS CONTENT -->
+             <h2 class="section-title" data-translate="title_uas_implements">Farm Implements (from UAS Bangalore)</h2>
+            <div class="content-box">
+                <p data-translate="text_uas_intro">The University of Agricultural Sciences, Bangalore, has developed many useful farm implements. Farmers can benefit from these innovations.</p>
+                <ul data-translate="uas_ul_info_sources">
+                    <li data-translate="uas_li_website">Visit the <a href="https://uasbangalore.edu.in/" target="_blank">UAS Bangalore Official Website</a> for information on their research and available technologies.</li>
+                    <li data-translate="uas_li_contact_depts">Contact their agricultural engineering or extension departments for specific implement details.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- NEW Contact Us Section -->
+        <section id="section-contact" class="section">
+            <div class="container">
+                <h2 class="section-title" data-translate="title_contact_us">Contact Us</h2>
+                <div class="content-box">
+                    <p data-translate="contact_intro">Have questions, suggestions, or need support? We'd love to hear from you. Please reach out to us through the following channels:</p>
+                    <ul>
+                        <li data-translate="contact_email"><strong>Email:</strong> <a href="mailto:info@agrcportal.example.com">info@agrcportal.example.com</a> (This is a placeholder email)</li>
+                        <li data-translate="contact_phone"><strong>Phone:</strong> +91-9876543210 (This is a placeholder phone number)</li>
+                        <li data-translate="contact_address_heading"><strong>Address:</strong></li>
+                        <li data-translate="contact_address_detail">AGRC Farmer Assistance Initiative, [Placeholder City, State], India</li>
+                    </ul>
+                    <p data-translate="contact_disclaimer"><em>Please note: For urgent agricultural advice, always consult your local agricultural extension office or a qualified expert.</em></p>
+                </div>
+            </div>
+        </section>
+    </div> <!-- End of main container for sections -->
+
+
+    <footer class="main-footer">
+         <!-- YOUR EXISTING FOOTER -->
+         <div class="container">
+            <p data-translate="footer_text">© 2024 AGRC Farmer's Assistance. Designed to Support Indian Farmers.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- CONFIGURATION ---
+        const OPENWEATHERMAP_API_KEY = "802005ac6e0c8bb22286091170a4a766"; // Replace with your actual OpenWeatherMap API key
+        // Example if you got a key like this one, but ensure it's for OpenWeatherMap
+        // const OPENWEATHERMAP_API_KEY = "AIzaSyBHOoIw3TvC9ZAApfaclywOeXNRCWxeI3A";
+
+        // --- TRANSLATIONS DATA ---
+        const translations = {
+            en: {
+                // ... (Keep ALL your existing English translations)
+                header_phone: "ANY QUESTIONS? CALL US +1 800 559 6580",
+                nav_about_us: "About Us", nav_solutions: "Solutions", nav_services: "Services", nav_technologies: "Technologies", nav_blog: "Blog", nav_contacts: "Contacts",
+                hero_title: "BE THE LEADER", hero_subtitle: "IN THE INDUSTRY!", hero_text_desc: "Connecting farmers with resources and solutions for sustainable and profitable agriculture.", hero_cta_button: "Explore Solutions",
+                card1_title: "PREMIUM VEGETABLES", card1_desc: "Information on high-yield vegetable varieties, optimal growing conditions, and market linkage support.",
+                card2_title: "ECO SOLUTIONS", card2_desc: "Promoting organic farming, integrated pest management (IPM), and water conservation techniques for sustainable agriculture.",
+                card3_title: "FROST PROTECTION", card3_desc: "Guidance on protecting vulnerable crops from frost using timely weather alerts and effective mitigation strategies.",
+                btn_learn_more: "Learn More",
+                title_farmer_distress: "Farmer Well-being & Support", subtitle_distress_factors: "Addressing Key Stressors:", text_distress_intro: "Financial pressure from rising input costs (seeds, chemicals, equipment), labor expenses, and debt can be overwhelming. Limited market access, lack of policy awareness, and climate change impacts (water crises, crop failure) further contribute to this strain.",
+                subtitle_support_available: "Available Support & Information:", distress_li_schemes: "Government Schemes & Policies: Learn about beneficial schemes related to subsidies, insurance, and support. (We will aim to list some static links or information here).",
+                distress_li_market_access: "Market Access: Information on local mandis, eNAM portal, and fair pricing.", distress_li_financial_lit: "Financial Literacy: Resources on managing finances and understanding loan terms.",
+                distress_li_helplines: "Mental Health Helplines: (Example) KIRAN: 1800-599-0019.", distress_em_local_helplines: "Please verify and add local/state-specific helplines.",
+                distress_li_climate_resilience: "Climate Resilience: Tips on water conservation and drought-resistant crop varieties.",
+                distress_important_note: "Important Note:", distress_note_text: "This platform provides information. If you or someone you know is in distress, please contact mental health professionals or a trusted individual immediately.",
+                title_pest_management: "Pest Management & Safe Chemical Use", subtitle_problem_desc_pests: "Problem: Crop damage due to insects, limited funds for chemicals, or uncertainty about which chemical to use and in what quantity.",
+                subtitle_solution_approach_pests: "Our Approach:", pests_li_identification: "Pest Identification (Example): For 'Rice' crop, a common pest is 'Stem Borer'. Symptoms include 'dead heart' or 'white earhead'.",
+                pests_li_control_options: "Control Options:", pests_ul_options: "", pests_strong_organic: "Organic:", pests_strong_chemical: "Chemical (if necessary):", pests_li_correct_usage: "Correct Dosage & Safety:",
+                pests_strong_example_dosage: "Example:", pests_strong_warning: "ALWAYS follow product label instructions precisely.", pests_li_low_cost: "Low-Cost Solutions: Prioritize Integrated Pest Management (IPM) and locally available, affordable solutions.",
+                pests_em_disclaimer: "Disclaimer: This is illustrative. Consult a local agricultural expert for specific advice for your crop and region.",
+                title_weather_forecast: "Weather Forecast & Rain Prediction", text_weather_intro: "Get weather updates to plan your farming activities. This can help understand potential crop damage due to adverse weather and predict rainfall for various crop stages (initial, mid-growth, harvest).",
+                btn_get_weather: "Get Weather", btn_use_location: "Use My Location", label_temperature: "Temperature:", label_humidity: "Humidity:", label_wind: "Wind:", label_rain_chance: "Rain Chance (Next Few Days):",
+                title_equipment_help: "Equipment & Irrigation Issues", subtitle_common_problems: "Common Problems: Low current supply, motor failures, borewell issues are costly for farmers.",
+                subtitle_possible_solutions_equipment: "Information & Possible Solutions:", equip_li_low_voltage: "Low Voltage/Current: Check for loose connections at meter/starter. Ensure balanced 3-phase supply. Report to electricity board if persistent. Consider voltage stabilizers for sensitive equipment.",
+                equip_li_motor_issues: "Motor Issues: (Not starting, tripping, overheating) Check fuses/MCB, capacitor, overload relay settings. Ensure proper earthing. Preventative maintenance is key.",
+                equip_li_borewell_problems: "Borewell Issues: (Low yield, pump not working) Could be due to falling water table, siltation, pump wear & tear. Consult professionals for diagnosis. Explore rainwater harvesting for recharge.",
+                equip_li_finding_help: "Finding Help:", equip_span_connect_local: "Connect with local agricultural offices for trusted mechanic recommendations.",
+                title_marketing_storage: "Marketing, Storage & Price Info", subtitle_market_challenge: "Challenge: Farmers need to sell products at profitable rates and find storage.",
+                subtitle_marketing_support: "Support & Information:", market_li_price_discovery: "Price Discovery: We aim to show current vegetable rates in different locations (This is very hard to do real-time in a single HTML file without a backend and reliable API. For now, static links):",
+                market_ul_price_links: "", link_agmarknet: "AGMARKNET", market_li_selling_platforms: "Selling Platforms:", market_ul_platforms: "", link_enam: "eNAM (National Agriculture Market)",
+                market_li_storage: "Storage (Godowns):", market_ul_godowns: "", market_span_godown_locator: "(A godown locator requires a database and ideally mapping - complex for a single file).",
+                title_uas_implements: "Farm Implements (from UAS Bangalore)", text_uas_intro: "The University of Agricultural Sciences, Bangalore, has developed many useful farm implements. Farmers can benefit from these innovations.",
+                uas_ul_info_sources: "", uas_li_website: "Visit the UAS Bangalore Official Website for information on their research and available technologies.", uas_li_contact_depts: "Contact their agricultural engineering or extension departments for specific implement details.",
+                footer_text: "© 2024 AGRC Farmer's Assistance. Designed to Support Indian Farmers.",
+
+                // NEW TRANSLATIONS for About Us and Contact Us sections
+                title_about_us: "About AGRC",
+                about_para1: "AGRC is dedicated to empowering farmers by providing accessible information and connecting them with essential resources. Our mission is to foster sustainable agricultural practices and improve the livelihoods of farming communities across India.",
+                about_para2: "We believe that by bridging the gap between traditional farming wisdom and modern agricultural advancements, we can help farmers overcome challenges related to climate change, market access, and resource management. This platform aims to be a comprehensive guide for farmers seeking solutions for crop management, weather information, government schemes, and much more.",
+                title_contact_us: "Contact Us",
+                contact_intro: "Have questions, suggestions, or need support? We'd love to hear from you. Please reach out to us through the following channels:",
+                contact_email: "<strong>Email:</strong> <a href=\"mailto:info@agrcportal.example.com\">info@agrcportal.example.com</a> (This is a placeholder email)",
+                contact_phone: "<strong>Phone:</strong> +91-9876543210 (This is a placeholder phone number)",
+                contact_address_heading: "<strong>Address:</strong>",
+                contact_address_detail: "AGRC Farmer Assistance Initiative, [Placeholder City, State], India",
+                contact_disclaimer: "<em>Please note: For urgent agricultural advice, always consult your local agricultural extension office or a qualified expert.</em>"
+
+            },
+            hi: { // Hindi translations
+                // ... (Keep ALL your existing Hindi translations and ADD these new ones)
+                header_phone: "कोई प्रश्न? हमें कॉल करें +1 800 559 6580",
+                nav_about_us: "हमारे बारे में", nav_solutions: "समाधान", nav_services: "सेवाएँ", nav_technologies: "प्रौद्योगिकियाँ", nav_blog: "ब्लॉग", nav_contacts: "संपर्क",
+                hero_title: "अग्रणी बनें", hero_subtitle: "उद्योग में!", hero_text_desc: "किसानों को टिकाऊ और लाभदायक कृषि के लिए संसाधनों और समाधानों से जोड़ना।", hero_cta_button: "समाधान खोजें",
+                card1_title: "उत्कृष्ट सब्जियां", card1_desc: "उच्च उपज वाली सब्जी किस्मों, इष्टतम बढ़ती परिस्थितियों और बाजार संपर्क समर्थन पर जानकारी।",
+                card2_title: "पर्यावरण-अनुकूल समाधान", card2_desc: "जैविक खेती, एकीकृत कीट प्रबंधन (आईपीएम), और टिकाऊ कृषि के लिए जल संरक्षण तकनीकों को बढ़ावा देना।",
+                card3_title: "पाला संरक्षण", card3_desc: "समय पर मौसम अलर्ट और प्रभावी शमन रणनीतियों का उपयोग करके कमजोर फसलों को पाले से बचाने पर मार्गदर्शन।",
+                btn_learn_more: "और जानें",
+                title_farmer_distress: "किसान कल्याण और सहायता", subtitle_distress_factors: "मुख्य तनाव कारकों का समाधान:", text_distress_intro: "बढ़ती लागत (बीज, रसायन, उपकरण), श्रम व्यय और ऋण का वित्तीय दबाव भारी पड़ सकता है। सीमित बाजार पहुंच, नीति जागरूकता की कमी, और जलवायु परिवर्तन के प्रभाव (जल संकट, फसल विफलता) इस तनाव को और बढ़ाते हैं।",
+                subtitle_support_available: "उपलब्ध सहायता और जानकारी:", distress_li_schemes: "सरकारी योजनाएं और नीतियां: सब्सिडी, बीमा और सहायता से संबंधित लाभकारी योजनाओं के बारे में जानें। (हमारा लक्ष्य यहां कुछ स्थिर लिंक या जानकारी सूचीबद्ध करना है)।",
+                distress_li_market_access: "बाजार पहुंच: स्थानीय मंडियों, ईनाम पोर्टल और उचित मूल्य निर्धारण पर जानकारी।", distress_li_financial_lit: "वित्तीय साक्षरता: वित्त प्रबंधन और ऋण शर्तों को समझने के संसाधन।",
+                distress_li_helplines: "मानसिक स्वास्थ्य हेल्पलाइन: (उदाहरण) किरण: 1800-599-0019।", distress_em_local_helplines: "कृपया स्थानीय/राज्य-विशिष्ट हेल्पलाइन सत्यापित करें और जोड़ें।",
+                distress_li_climate_resilience: "जलवायु लचीलापन: जल संरक्षण और सूखा प्रतिरोधी फसल किस्मों पर सुझाव।",
+                distress_important_note: "महत्वपूर्ण सूचना:", distress_note_text: "यह मंच जानकारी प्रदान करता है। यदि आप या आपका कोई जानने वाला संकट में है, तो कृपया तुरंत मानसिक स्वास्थ्य पेशेवरों या किसी विश्वसनीय व्यक्ति से संपर्क करें।",
+                title_pest_management: "कीट प्रबंधन और सुरक्षित रासायनिक उपयोग", subtitle_problem_desc_pests: "समस्या: कीड़ों के कारण फसल क्षति, रसायनों के लिए सीमित धन, या किस रसायन का उपयोग करें और कितनी मात्रा में करें, इस बारे में अनिश्चितता।",
+                subtitle_solution_approach_pests: "हमारा दृष्टिकोण:", pests_li_identification: "कीट पहचान (उदाहरण): 'चावल' की फसल के लिए, एक आम कीट 'तना छेदक' है। लक्षणों में 'डेड हार्ट' या 'सफेद बाली' शामिल हैं।",
+                pests_li_control_options: "नियंत्रण विकल्प:", pests_ul_options: "", pests_strong_organic: " जैविक:", pests_strong_chemical: "रासायनिक (यदि आवश्यक हो):", pests_li_correct_usage: "सही खुराक और सुरक्षा:",
+                pests_strong_example_dosage: "उदाहरण:", pests_strong_warning: "हमेशा उत्पाद लेबल निर्देशों का सटीक पालन करें।", pests_li_low_cost: "कम लागत वाले समाधान: एकीकृत कीट प्रबंधन (आईपीएम) और स्थानीय रूप से उपलब्ध, किफायती समाधानों को प्राथमिकता दें।",
+                pests_em_disclaimer: "अस्वीकरण: यह उदाहरण है। अपनी फसल और क्षेत्र के लिए विशिष्ट सलाह के लिए स्थानीय कृषि विशेषज्ञ से परामर्श लें।",
+                title_weather_forecast: "मौसम पूर्वानुमान और वर्षा की भविष्यवाणी", text_weather_intro: "अपनी कृषि गतिविधियों की योजना बनाने के लिए मौसम अपडेट प्राप्त करें। यह प्रतिकूल मौसम के कारण संभावित फसल क्षति को समझने और विभिन्न फसल चरणों (प्रारंभिक, मध्य-वृद्धि, कटाई) के लिए वर्षा की भविष्यवाणी करने में मदद कर सकता है।",
+                btn_get_weather: "मौसम प्राप्त करें", btn_use_location: "मेरा स्थान उपयोग करें", label_temperature: "तापमान:", label_humidity: "नमी:", label_wind: "हवा:", label_rain_chance: "वर्षा की संभावना (अगले कुछ दिन):",
+                title_equipment_help: "उपकरण और सिंचाई मुद्दे", subtitle_common_problems: "सामान्य समस्याएं: कम वर्तमान आपूर्ति, मोटर विफलताएं, बोरवेल मुद्दे किसानों के लिए महंगे हैं।",
+                subtitle_possible_solutions_equipment: "जानकारी और संभावित समाधान:", equip_li_low_voltage: "कम वोल्टेज/करंट: मीटर/स्टार्टर पर ढीले कनेक्शन की जांच करें। संतुलित 3-चरण आपूर्ति सुनिश्चित करें। यदि लगातार हो तो बिजली बोर्ड को रिपोर्ट करें। संवेदनशील उपकरणों के लिए वोल्टेज स्टेबलाइजर्स पर विचार करें।",
+                equip_li_motor_issues: "मोटर मुद्दे: (शुरू नहीं हो रहा है, ट्रिपिंग, ओवरहीटिंग) फ़्यूज़/एमसीबी, कैपेसिटर, ओवरलोड रिले सेटिंग्स की जांच करें। उचित अर्थिंग सुनिश्चित करें। निवारक रखरखाव महत्वपूर्ण है।",
+                equip_li_borewell_problems: "बोरवेल मुद्दे: (कम उपज, पंप काम नहीं कर रहा है) गिरते जल स्तर, गाद, पंप के टूट-फूट के कारण हो सकता है। निदान के लिए पेशेवरों से परामर्श करें। पुनर्भरण के लिए वर्षा जल संचयन का अन्वेषण करें।",
+                equip_li_finding_help: "सहायता ढूँढना:", equip_span_connect_local: "विश्वसनीय मैकेनिक सिफारिशों के लिए स्थानीय कृषि कार्यालयों से जुड़ें।",
+                title_marketing_storage: "विपणन, भंडारण और मूल्य जानकारी", subtitle_market_challenge: "चुनौती: किसानों को लाभकारी दरों पर उत्पाद बेचने और भंडारण खोजने की आवश्यकता है।",
+                subtitle_marketing_support: "सहायता और जानकारी:", market_li_price_discovery: "मूल्य खोज: हमारा लक्ष्य विभिन्न स्थानों पर वर्तमान सब्जी दरों को दिखाना है (बैकएंड और विश्वसनीय एपीआई के बिना एक ही एचटीएमएल फ़ाइल में वास्तविक समय में ऐसा करना बहुत कठिन है। अभी के लिए, स्थिर लिंक):",
+                market_ul_price_links: "", link_agmarknet: "एगमार्कनेट", market_li_selling_platforms: "बिक्री मंच:", market_ul_platforms: "", link_enam: "ईनाम (राष्ट्रीय कृषि बाजार)",
+                market_li_storage: "भंडारण (गोदाम):", market_ul_godowns: "", market_span_godown_locator: "(एक गोदाम लोकेटर को एक डेटाबेस और आदर्श रूप से मैपिंग की आवश्यकता होती है - एक फ़ाइल के लिए जटिल)।",
+                title_uas_implements: "कृषि उपकरण (यूएएस बैंगलोर से)", text_uas_intro: "कृषि विज्ञान विश्वविद्यालय, बैंगलोर ने कई उपयोगी कृषि उपकरण विकसित किए हैं। किसान इन नवाचारों से लाभान्वित हो सकते हैं।",
+                uas_ul_info_sources: "", uas_li_website: "उनके शोध और उपलब्ध प्रौद्योगिकियों पर जानकारी के लिए यूएएस बैंगलोर की आधिकारिक वेबसाइट पर जाएं।", uas_li_contact_depts: "विशिष्ट उपकरण विवरण के लिए उनके कृषि इंजीनियरिंग या विस्तार विभागों से संपर्क करें।",
+                footer_text: "© 2024 एजीआरसी किसान सहायता। भारतीय किसानों का समर्थन करने के लिए डिज़ाइन किया गया।",
+
+
+                // NEW HINDI TRANSLATIONS
+                title_about_us: "एजीआरसी के बारे में",
+                about_para1: "एजीआरसी किसानों को सुलभ जानकारी प्रदान करके और उन्हें आवश्यक संसाधनों से जोड़कर सशक्त बनाने के लिए समर्पित है। हमारा मिशन स्थायी कृषि पद्धतियों को बढ़ावा देना और पूरे भारत में कृषक समुदायों की आजीविका में सुधार करना है।",
+                about_para2: "हमारा मानना है कि पारंपरिक कृषि ज्ञान और आधुनिक कृषि प्रगति के बीच की खाई को पाटकर, हम किसानों को जलवायु परिवर्तन, बाजार पहुंच और संसाधन प्रबंधन से संबंधित चुनौतियों से उबरने में मदद कर सकते हैं। इस मंच का उद्देश्य फसल प्रबंधन, मौसम की जानकारी, सरकारी योजनाओं और बहुत कुछ के समाधान तलाश रहे किसानों के लिए एक व्यापक मार्गदर्शिका बनना है।",
+                title_contact_us: "हमसे संपर्क करें",
+                contact_intro: "प्रश्न, सुझाव हैं, या सहायता चाहिए? हमें आपसे सुनकर खुशी होगी। कृपया निम्नलिखित चैनलों के माध्यम से हमसे संपर्क करें:",
+                contact_email: "<strong>ईमेल:</strong> <a href=\"mailto:info@agrcportal.example.com\">info@agrcportal.example.com</a> (यह एक प्लेसहोल्डर ईमेल है)",
+                contact_phone: "<strong>फ़ोन:</strong> +91-9876543210 (यह एक प्लेसहोल्डर फ़ोन नंबर है)",
+                contact_address_heading: "<strong>पता:</strong>",
+                contact_address_detail: "एजीआरसी किसान सहायता पहल, [प्लेसहोल्डर शहर, राज्य], भारत",
+                contact_disclaimer: "<em>कृपया ध्यान दें: तत्काल कृषि सलाह के लिए, हमेशा अपने स्थानीय कृषि विस्तार कार्यालय या किसी योग्य विशेषज्ञ से परामर्श लें।</em>"
+            }
+            // Add translations for kn, te, ta in the same way, including new keys
+        };
+
+        // --- LANGUAGE SWITCHING FUNCTIONALITY (KEEP AS IS) ---
+        function switchLanguage(lang) {
+            // ... your existing switchLanguage function ...
+             document.querySelectorAll('.language-switcher button').forEach(button => {
+                button.classList.remove('active-lang');
+            });
+            document.querySelector(`.language-switcher button[onclick="switchLanguage('${lang}')"]`).classList.add('active-lang');
+
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                } else if (translations.en[key]) {
+                    element.innerHTML = translations.en[key];
+                }
+            });
+            document.documentElement.lang = lang;
+        }
+
+
+        // --- WEATHER FETCHING FUNCTIONALITY (KEEP AS IS) ---
+        // ... your existing weather functions (fetchWeatherData, displayCurrentWeather, get5DayForecast, displayDailyForecast, getWeather, getWeatherByLocation) ...
+        const weatherResultsDiv = document.getElementById('weather-results');
+        const weatherCityNameEl = document.getElementById('weather-city-name');
+        const weatherIconEl = document.getElementById('weather-icon');
+        const weatherDescriptionEl = document.getElementById('weather-description');
+        const weatherTempEl = document.getElementById('weather-temp');
+        const weatherHumidityEl = document.getElementById('weather-humidity');
+        const weatherWindEl = document.getElementById('weather-wind');
+        const weatherRainPredictionEl = document.getElementById('weather-rain-prediction');
+        const weatherErrorEl = document.getElementById('weather-error');
+        const dailyForecastContainer = document.getElementById('daily-forecast-container');
+
+        async function fetchWeatherData(url, isForecast = false) {
+            weatherErrorEl.textContent = '';
+            // weatherResultsDiv.style.display = 'none'; // Don't hide if updating forecast part
+            if (!OPENWEATHERMAP_API_KEY || OPENWEATHERMAP_API_KEY === "YOUR_API_KEY_HERE") {
+                weatherErrorEl.textContent = "Weather API key is not configured. Please set it in the script.";
+                return;
+            }
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+
+                if (isForecast && data.list) {
+                    displayDailyForecast(data);
+                } else if (data.weather) {
+                     displayCurrentWeather(data);
+                     get5DayForecast(data.coord.lat, data.coord.lon); // Fetch forecast after current
+                }
+
+            } catch (error) {
+                console.error("Weather fetch error:", error);
+                weatherErrorEl.textContent = `Error fetching weather: ${error.message}. Check city name or API key.`;
+            }
+        }
+
+        function displayCurrentWeather(data) {
+            weatherResultsDiv.style.display = 'block';
+            weatherCityNameEl.textContent = data.name + ", " + data.sys.country;
+            weatherIconEl.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+            weatherIconEl.alt = data.weather[0].description;
+            weatherDescriptionEl.textContent = data.weather[0].description; // Already translated by API sometimes
+            weatherTempEl.textContent = `${data.main.temp}°C (Feels like: ${data.main.feels_like}°C)`;
+            weatherHumidityEl.textContent = `${data.main.humidity}%`;
+            weatherWindEl.textContent = `${data.wind.speed} m/s`; // Removed direction for simplicity
+            if (data.rain && data.rain['1h']) {
+                 // Let daily forecast handle rain prediction display for consistency
+            } else {
+                 // Let daily forecast handle rain prediction display
+            }
+        }
+
+        function get5DayForecast(lat, lon) {
+            const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${OPENWEATHERMAP_API_KEY}&units=metric&lang=${document.documentElement.lang || 'en'}`;
+            fetchWeatherData(forecastUrl, true);
+        }
+
+        function displayDailyForecast(data) {
+            dailyForecastContainer.innerHTML = `<h4 data-translate="daily_forecast_title">Daily Rain Outlook (Next 5 Days):</h4>`; // Title for forecast section
+            switchLanguage(document.documentElement.lang || 'en'); // re-apply translation for this new title
+
+            let dailyData = {}; // To aggregate data by day
+
+            data.list.forEach(item => {
+                const date = new Date(item.dt * 1000);
+                const dayKey = date.toISOString().split('T')[0]; // YYYY-MM-DD
+
+                if (!dailyData[dayKey]) {
+                    dailyData[dayKey] = {
+                        temps: [],
+                        pops: [], // Probability of Precipitation
+                        descriptions: {}, // To get most common description
+                        icons: {}, // To get most common icon
+                        date: date
+                    };
+                }
+                dailyData[dayKey].temps.push(item.main.temp);
+                dailyData[dayKey].pops.push(item.pop);
+                const desc = item.weather[0].description;
+                dailyData[dayKey].descriptions[desc] = (dailyData[dayKey].descriptions[desc] || 0) + 1;
+                const icon = item.weather[0].icon.slice(0, -1) + "d"; // Use day icon
+                dailyData[dayKey].icons[icon] = (dailyData[dayKey].icons[icon] || 0) + 1;
+
+            });
+
+            let forecastHTML = '<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-around;">';
+            let count = 0;
+
+            for (const dayKey in dailyData) {
+                if (count >= 5) break; // Limit to 5 days
+
+                const dayInfo = dailyData[dayKey];
+                const avgTemp = dayInfo.temps.reduce((a, b) => a + b, 0) / dayInfo.temps.length;
+                const maxPop = Math.max(...dayInfo.pops);
+                const mostCommonDesc = Object.keys(dayInfo.descriptions).reduce((a, b) => dayInfo.descriptions[a] > dayInfo.descriptions[b] ? a : b);
+                const mostCommonIcon = Object.keys(dayInfo.icons).reduce((a, b) => dayInfo.icons[a] > dayInfo.icons[b] ? a : b);
+
+
+                const dayName = dayInfo.date.toLocaleDateString(document.documentElement.lang || 'en', { weekday: 'short' });
+                const dateStr = dayInfo.date.toLocaleDateString(document.documentElement.lang || 'en', { day: 'numeric', month: 'short' });
+
+
+                forecastHTML += `
+                    <div style="border: 1px solid #ddd; padding: 10px; border-radius: 5px; text-align: center; flex-basis: 120px;">
+                        <strong>${dayName}</strong><br/>
+                        <small>${dateStr}</small><br/>
+                        <img src="https://openweathermap.org/img/wn/${mostCommonIcon}.png" alt="${mostCommonDesc}" style="width:50px; height:auto;">
+                        <div>${Math.round(avgTemp)}°C</div>
+                        <div style="font-size:0.9em; color: #007bff;">Rain: ${Math.round(maxPop * 100)}%</div>
+                        <div style="font-size:0.8em; text-transform: capitalize;">${mostCommonDesc}</div>
+                    </div>
+                `;
+                count++;
+            }
+            forecastHTML += '</div>';
+            dailyForecastContainer.innerHTML += forecastHTML;
+
+            // Simple overall rain prediction based on next 24h
+            const firstDayKey = Object.keys(dailyData)[0];
+            if (firstDayKey && dailyData[firstDayKey]) {
+                const firstDayPop = Math.max(...dailyData[firstDayKey].pops);
+                 weatherRainPredictionEl.textContent = `${Math.round(firstDayPop * 100)}% chance of rain today/tomorrow.`;
+            } else {
+                 weatherRainPredictionEl.textContent = `Check daily details.`;
+            }
+        }
+
+        function getWeather() {
+            const city = document.getElementById('city-input').value;
+            if (!city) {
+                weatherErrorEl.textContent = 'Please enter a city name.';
+                return;
+            }
+            const currentUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${OPENWEATHERMAP_API_KEY}&units=metric&lang=${document.documentElement.lang || 'en'}`;
+            fetchWeatherData(currentUrl);
+        }
+
+        function getWeatherByLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const currentUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${OPENWEATHERMAP_API_KEY}&units=metric&lang=${document.documentElement.lang || 'en'}`;
+                    fetchWeatherData(currentUrl);
+                }, error => {
+                    weatherErrorEl.textContent = `Error getting location: ${error.message}`;
+                });
+            } else {
+                weatherErrorEl.textContent = 'Geolocation is not supported by this browser.';
+            }
+        }
+
+
+        // --- NAVIGATION ACTIVE STATE & SMOOTH SCROLL FOR INTERNAL LINKS ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('.main-nav a.nav-link');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // For internal links only
+                    if (this.getAttribute('href').startsWith('#')) {
+                        // e.preventDefault(); // Already handled by html {scroll-behavior: smooth} if target exists
+
+                        // Remove active class from all
+                        navLinks.forEach(nav => nav.classList.remove('active-nav'));
+                        // Add active class to the clicked one
+                        this.classList.add('active-nav');
+
+                        // Smooth scroll handled by CSS `scroll-behavior: smooth;`
+                        // const targetId = this.getAttribute('href');
+                        // const targetElement = document.querySelector(targetId);
+                        // if (targetElement) {
+                        //     targetElement.scrollIntoView({ behavior: 'smooth' });
+                        // }
+                    }
+                    // External links will open normally (or in new tab if target="_blank")
+                });
+            });
+
+            // Set initial language based on translations or default to 'en'
+            const initialLang = Object.keys(translations)[0] || 'en';
+            switchLanguage(initialLang);
+
+             // Highlight nav link if page loads with a hash
+            if(window.location.hash) {
+                const hash = window.location.hash;
+                navLinks.forEach(link => {
+                    if(link.getAttribute('href') === hash) {
+                        link.classList.add('active-nav');
+                    } else {
+                        link.classList.remove('active-nav');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

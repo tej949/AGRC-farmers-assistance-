@@ -1,7 +1,8 @@
-# AGRC-farmers-assistance-
+# Agriculture Assistance Web Application (Krishi Sahayatha)
+
 ## Problem Statement
 
-This web application, "farmers assistance," aims to address critical issues faced by farmers, including:
+This web application, "Krishi Sahayatha," aims to address critical issues faced by farmers, including:
 
 1.  **Farmer Suicides:** Providing resources and information to alleviate factors contributing to farmer suicides, such as financial strain, lack of market access, and lack of awareness of support policies.
 2.  **Insect Infestation:** Assisting farmers in identifying crop pests and providing information on effective and affordable pest control methods.
@@ -36,6 +37,34 @@ The application follows a full-stack architecture:
 * **API:** Google Generative AI API (for content generation)
 * **Weather API:** OpenWeatherMap (or similar)
 
+## Folder Structure
+
+
+agriculture-assistance/
+├── client/             # Frontend code (React)
+│   ├── public/
+│   │   ├── index.html  # Main HTML file
+│   │   └── assets/     # Images, fonts, etc.
+│   ├── src/
+│   │   ├── components/ # Reusable React components
+│   │   ├── pages/      # Main page components
+│   │   ├── styles/     # CSS files
+│   │   ├── utils/      # Utility functions (e.g., i18n)
+│   │   ├── App.js      # Main application component
+│   │   └── index.js    # Entry point for React
+│   └── package.json    # Frontend dependencies and scripts
+├── server/             # Backend code (Node.js/Express)
+│   ├── controllers/    # Logic for handling requests
+│   │   ...
+│   ├── models/         # Data models (using Mongoose)
+│   │   ...
+│   ├── routes/         # API routes
+│   │   ...
+│   ├── config/         # Configuration files
+│   │   └── config.json # API keys (Less sensitive data, more sensitive in .env)
+│   ├── app.js          # Main Express application
+│   └── package.json    # Backend dependencies and scripts
+└── README.md         # Project documentation
 
 
 ## API Endpoints
